@@ -35,3 +35,7 @@ def home(request):
         'posts': posts
     }
     return render(request, 'blog/index.html', context)
+
+def about(request):
+    context = {'title': 'من أنا'}
+    return render(request, 'blog/about.html', context)
