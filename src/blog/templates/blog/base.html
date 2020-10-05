@@ -53,8 +53,9 @@
                 </ul>
 
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active"><a class="nav-link">تسجيل الدخول</a></li>
-                    <li class="nav-item active"><a class="nav-link">تسجيل</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="{% url 'login' %}">تسجيل الدخول</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="{% url 'logout' %}">تسجيل الخروج</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="{% url 'register' %}">تسجيل</a></li>
                 </ul>
             </div>
         </nav>
@@ -66,8 +67,13 @@
         <div class="contaner mb-4">
             <div class="row">
                 <div class="col-md-8">
-                    {% block content %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{message.tags}}">{{message}}</div>
+                    {% endfor %}
+                    {% endif %}
 
+                    {% block content %}
                     {% endblock content %}
                 </div>
                 <div class="col-md-4">
