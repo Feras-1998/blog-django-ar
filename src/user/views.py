@@ -53,3 +53,10 @@ def logout_user(request):
     }
 
     return render(request, 'user/logout.html', context)
+
+def profile(request):
+    context = {
+        'title': 'الملف الشخصي',
+    }
+
+    return render(request, 'user/profile.html', context)

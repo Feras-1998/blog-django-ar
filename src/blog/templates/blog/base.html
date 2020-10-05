@@ -52,11 +52,23 @@
                     </li>
                 </ul>
 
-                <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active"><a class="nav-link" href="#">تدوينة جديدة</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="{% url 'profile' %}">الملف الشخصي</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="{% url 'logout' %}">تسجيل الخروج</a></li>
+                    </ul>
+                {% else %}
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active"><a class="nav-link" href="{% url 'login' %}">تسجيل الدخول</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="{% url 'register' %}">تسجيل</a></li>
+                    </ul>
+                {% endif %}
+                <!-- <ul class="navbar-nav mr-auto">
                     <li class="nav-item active"><a class="nav-link" href="{% url 'login' %}">تسجيل الدخول</a></li>
                     <li class="nav-item active"><a class="nav-link" href="{% url 'logout' %}">تسجيل الخروج</a></li>
                     <li class="nav-item active"><a class="nav-link" href="{% url 'register' %}">تسجيل</a></li>
-                </ul>
+                </ul> -->
             </div>
         </nav>
         <!-- End Nav Bar -->
@@ -107,7 +119,7 @@
                         </div>
 
                         <div class="card m-3">
-                            <h3 class="card-titale text-center border-bottom p-2 m-3">من أنا</h3>
+                            <h3 class="card-titale text-center border-bottom p-2 m-3">مواقع مهمة</h3>
                             <div class="card-body text-center">
                                 <ul>
                                     <li><a href="#">الموقع 1</a></li>
