@@ -1,14 +1,14 @@
 from django.core.checks import messages
 from .forms import UserCreationForm, LoginForm
-from django.http import request
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from blog.models import Post
 
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-        if form.is_valid():
+        if form.is_valid(): 
             form.save()
             username = form.cleaned_data['username']
 
@@ -55,8 +55,10 @@ def logout_user(request):
     return render(request, 'user/logout.html', context)
 
 def profile(request):
+    posts = Post.objects.filter(author=request.user)
     context = {
         'title': 'الملف الشخصي',
+        'posts': posts,
     }
 
     return render(request, 'user/profile.html', context)
