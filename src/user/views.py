@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from blog.models import Post
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 def register(request):
     if request.method == 'POST':
@@ -56,9 +57,23 @@ def logout_user(request):
 
 def profile(request):
     posts = Post.objects.filter(author=request.user)
+    post_list = Post.objects.filter(author=request.user)
+
+    paginator = Paginator(posts, 5)
+    page = request.GET.get('page')
+
+    try:
+        post_list = paginator.page(page)
+    except PageNotAnInteger:
+        post_list = paginator.page(1)
+    except EmptyPage:
+        post_list = paginator.page(paginator.num_page)
+
     context = {
         'title': 'الملف الشخصي',
         'posts': posts,
+        'page': page,
+        'post_list': post_list,
     }
 
     return render(request, 'user/profile.html', context)

@@ -26,7 +26,7 @@
 </div>
 
 <h3 class="border-bottom pb-3 mb-4">تدويناتي</h3>
-{% for post in posts %}
+{% for post in post_list %}
 <ul class="pr-5">
     <li><a class="text-dark" href="{% url 'detail' post.pk %}">{{post.title}}</a></li>
 </ul>
@@ -34,12 +34,6 @@
 <h4 class="text-center mb-5">لا يوجد تدوينات</h4>
 {% endfor %}
 
-{% if post.count >= 10 %}
-<div class="border-top pt-3 mt-4 text-center">
-    <a class="btn btn-secondary bg-secondary" href="#">التالي</a>
-    <span class="pr-4 pl-4">صفحة 2 من 5</span>
-    <a class="btn btn-secondary bg-secondary" href="#">السابق</a>
-</div>
-{% endif %}
+{% include 'blog/pagination.html' with page=post_list %}
 
 {% endblock content %}
