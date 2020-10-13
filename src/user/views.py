@@ -9,10 +9,10 @@ def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid(): 
-            form.save()
-            username = form.cleaned_data['username']
-
-            messages.success(request, f'تهانينا {username} لقد تمت عملية التسجيل بنجاح')
+            new_User = form.save(commit=False)
+            new_User.set_password(form.cleaned_data['password1'])
+            new_User.save()
+            messages.success(request, f'تهانينا {new_User} لقد تمت عملية التسجيل بنجاح')
 
             return redirect('home')
     else:
