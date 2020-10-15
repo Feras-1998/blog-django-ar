@@ -7,6 +7,7 @@ from blog.models import Post
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.decorators import login_required
 
+
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -26,6 +27,7 @@ def register(request):
     }
 
     return render(request, 'user/register.html', context)
+
 
 def login_user(request):
     if request.method == 'POST':
@@ -48,6 +50,7 @@ def login_user(request):
 
     return render(request, 'user/login.html', context)
 
+
 def logout_user(request):
     logout(request)
     context = {
@@ -55,6 +58,7 @@ def logout_user(request):
     }
 
     return render(request, 'user/logout.html', context)
+
 
 @login_required(login_url='login')
 def profile(request):
@@ -79,6 +83,7 @@ def profile(request):
     }
 
     return render(request, 'user/profile.html', context)
+
 
 @login_required(login_url='login')
 def profile_update(request):
