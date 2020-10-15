@@ -5,9 +5,9 @@
 <div class="border p-4 mb-5 mt-4">
     <div class="row">
         <div class="col-md-3 text-center">
-            <img class="ing-fluid" width="70px" src="{{ user.profile.image.url }}" alt="صورة الناشر">
+            <img class="ing-fluid" width="70px" src="{{ user.profile.image.url }}" alt="{{ user.username }}">
             <div class="mt-3">
-                <a class="btn btn-secondary bg-secondary" href="#"><i class="fas fa-pen fa-xs"></i> تحرير</a>
+                <a class="btn btn-secondary bg-secondary" href="{% url 'profile_update' %}"><i class="fas fa-pen fa-xs"></i> تحرير</a>
             </div>
         </div>
         <div class="col-md-9 text-center">

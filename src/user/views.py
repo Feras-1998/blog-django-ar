@@ -1,10 +1,11 @@
 from django.core.checks import messages
-from .forms import UserCreationForm, LoginForm
+from .forms import UserCreationForm, LoginForm, UserUpdateForm, ProfileUpdateForm
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from blog.models import Post
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.contrib.auth.decorators import login_required
 
 def register(request):
     if request.method == 'POST':
@@ -55,6 +56,7 @@ def logout_user(request):
 
     return render(request, 'user/logout.html', context)
 
+@login_required(login_url='login')
 def profile(request):
     posts = Post.objects.filter(author=request.user)
     post_list = Post.objects.filter(author=request.user)
@@ -77,3 +79,26 @@ def profile(request):
     }
 
     return render(request, 'user/profile.html', context)
+
+@login_required(login_url='login')
+def profile_update(request):
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES ,instance=request.user.profile)
+
+        if user_form.is_valid and profile_form.is_valid:
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'تم تحديث الملف الشخصي')
+            return redirect('profile')
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
+
+    context = {
+        'title': 'تعديل الملف الشخصي',
+        'user_form': user_form,
+        'profile_form': profile_form,
+    }
+
+    return render(request, 'user/profile_update.html', context)
