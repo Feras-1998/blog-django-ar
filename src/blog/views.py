@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Post
 from .forms import NewComment, PostCreateForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 def home(request):
@@ -85,3 +85,16 @@ class PostUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
             return True
         else:
             return False
+
+
+class PostDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
+    model = Post
+    success_url = '/'
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        else:
+            return False
+
