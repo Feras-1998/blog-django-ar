@@ -5,6 +5,12 @@
         <img class="ing-fluid" width="70px" src="{{post.author.profile.image.url}}" alt="صورة الناشر">
         <h3>{{post.title}}</h3>
         <span>نشر في {{post.post_date | date:"d-m-Y"}}</span>
+        {% if post.author == user %}
+            <div class="form-group btn-editing">
+                <a class="btn btn-secondary" href="{% url 'post-update' post.id %}">تحرير</a>
+                <a class="btn btn-danger" href="#">حذف</a>
+            </div>
+        {% endif %}
         <p>{{post.content}}</p>
     </div>
 
